@@ -14,24 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfig {
 
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetailsManager userDetailsManager = new InMemoryUserDetailsManager();
-//
-//        userDetailsManager.createUser(User.withDefaultPasswordEncoder()
-//                .username("user")
-//                .password("password")
-//                .roles("USER")
-//                .build());
-//
-//        userDetailsManager.createUser(User.withDefaultPasswordEncoder()
-//                .username("admin")
-//                .password("admin")
-//                .roles("ADMIN")
-//                .build());
-//        return userDetailsManager;
-//    }
-
     @Bean
     public CommandLineRunner iniRegisterUser(AuthRepo authRepo) {
         return args -> {
@@ -57,11 +39,7 @@ public class SecurityConfig {
     public SecurityFilterChain configureSecurity(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests() //
                 .requestMatchers("/login").permitAll() //
-                .requestMatchers("/", "/search").authenticated() //
-                .requestMatchers(HttpMethod.GET, "/api/**")
-                .authenticated() //
-                .requestMatchers(HttpMethod.POST, "/new-video",
-                        "/api/**").hasRole("ADMIN") //
+                .requestMatchers("/**").authenticated() //
                 .anyRequest().denyAll() //
                 .and() //
                 .formLogin() //
